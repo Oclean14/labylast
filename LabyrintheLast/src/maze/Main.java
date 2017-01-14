@@ -10,9 +10,13 @@ public class Main {
 	
 	private static int nRows=15;
 	private static int nCols=15;
-	public static Maze maze = new Maze(nRows,nCols);
-	private static Cell start = new Cell(0,4,maze);
-	private static Cell end = new Cell(5,10,maze);
+	
+	private static int[] startCoord = {1,1};
+	private static int[] endCoord = {5,10};
+	
+	public static Maze maze = new Maze(nRows,nCols,startCoord,endCoord);
+
+	
 	
 
 
@@ -22,12 +26,8 @@ public class Main {
 	
 	
 	  public static void main(String[] args) {
-		  
-			
-			maze.setStartCell(start);
-			maze.setEndCell(end);
-			maze.setSolver(new OriginalSolver(maze));//changeable
 
+			maze.setSolver(new OriginalSolver(maze));//changeable
 
 			
 	       SwingUtilities.invokeLater(() -> {

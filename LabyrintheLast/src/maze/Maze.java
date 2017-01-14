@@ -77,26 +77,34 @@ public class Maze extends JPanel {
     private final int margin;
     private final int[][] maze;
     private LinkedList<Integer> solution;
-    private Cell start;
-    private Cell end;
+    private static Cell start;
+    private static Cell end;
  
-    public Maze(int nRows,int nCols) {
+    public Maze(int nRows,int nCols,int [] startCoord,int[] endCoord) {
     	
     	this.nCols = nCols;
         this.nRows = nRows;
+        start = new Cell(startCoord[0],startCoord[1],this);
+        end = new Cell(endCoord[0],endCoord[1],this);
         setPreferredSize(new Dimension(nCols*27, nRows*27));
         setBackground(Color.white);
         this.margin = 27;
 
         maze = new int[nRows][nCols];
         setSolution(new LinkedList<>());
-        generateMaze(0, 0);
+        generateMaze(start.getRow(), start.getCol());
  
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 new Thread(() -> {
-                   solver.solve(0);
+                	System.out.println("Je commence ma résolution à partir d'ici : "+start.getCol() +  nCols * (start.getRow()));
+                	System.out.println(start.getCol() +"+"+  nCols +"*"+ (start.getRow())+" = "+ start.getCol() +  nCols * (start.getRow()));
+
+                	System.out.println("Col start : "+start.getCol() + " Row start : "+start.getRow() + " et nCOls = "+nCols);
+                   solver.solve(16);
+                   //solver.solve(start.getCol() +  nCols * start.getRow());
+
                 }).start();
             }
         });
@@ -124,6 +132,7 @@ public class Maze extends JPanel {
         Dir[] dirs = Dir.values();
         Collections.shuffle(Arrays.asList(dirs));
         for (Dir dir : dirs) {
+        	System.out.println("Voila dir dans generateMaze " +dir);
             int nc = c + dir.getDx();
             int nr = r + dir.getDy();
             if (withinBounds(nr, nc) && getMaze()[nr][nc] == 0) {
@@ -156,7 +165,7 @@ public class Maze extends JPanel {
         g.setStroke(new BasicStroke(5));
         g.setColor(Color.black);
  
-        // draw maze
+        // draw maze in black
         for (int r = 0; r < nRows; r++) {
             for (int c = 0; c < nCols; c++) {
  
@@ -186,12 +195,14 @@ public class Maze extends JPanel {
         Path2D path = new Path2D.Float();
         path.moveTo(offset, offset);
  
+        //fait de path le serpent jaune à dessiner grâce à solution
         for (int pos : getSolution()) {
             int x = pos % nCols * cellSize + offset;
             int y = pos / nCols * cellSize + offset;
             path.lineTo(x, y);
         }
  
+        //dessine le serpent
         g.setColor(Color.orange);
         g.draw(path);
  

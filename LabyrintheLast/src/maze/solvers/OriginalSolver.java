@@ -76,7 +76,19 @@ public class OriginalSolver extends AbstractSolver{
     
     //controle que le point passé en parametre est dans les limites du labyrinthe
     boolean withinBounds(int r, int c,Maze maze) {
-        return c>= 0 && c< maze.getNCols() && r>= 0 && r< maze.getNRows();
+      
+    	if(c>= 0 && c< maze.getNCols() && r>= 0 && r< maze.getNRows())
+    		return true;
+    	else {
+    	try {
+   					Thread.sleep(1L);
+   				} catch (InterruptedException e) {
+   					// TODO Auto-generated catch block
+   					e.printStackTrace();
+   				}
+        
+        return false;
+    	}
     }
     public void setMaze(Maze maze)
     {

@@ -1,5 +1,7 @@
 package maze.solvers;
 
+import maze.Cell;
+
 public class AbstractSolver {
 
 	//Maze maze;
@@ -9,6 +11,11 @@ public class AbstractSolver {
 		return false;}
 
 	public boolean solve(int pos) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean solve(Cell start) {
 		// TODO Auto-generated method stub
 		return false;
 	}

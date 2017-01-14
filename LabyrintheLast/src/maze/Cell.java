@@ -51,7 +51,7 @@ public class Cell {
     
     public boolean isTheExit(Maze maze) {
     	
-		return ((this.getCol() == maze.getEnd().getCol()) && (this.getRow() == maze.getEnd().getRow()));
+		return ((this.getCol() == maze.getEndCell().getCol()) && (this.getRow() == maze.getEndCell().getRow()));
 }
     
     public Cell isExploitable(Cell cell)//renvoi la cellule correspondante à la direction exploitable si possible, null sinon
