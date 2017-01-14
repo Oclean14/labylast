@@ -8,22 +8,24 @@ import maze.solvers.OriginalSolver;
 
 public class Main {
 	
-	private static Cell start;
-	private static Cell end;
-	private static int nRows=30;
-	private static int nCols=50;
+	private static int nRows=15;
+	private static int nCols=15;
+	public static Maze maze = new Maze(nRows,nCols);
+	private static Cell start = new Cell(0,4,maze);
+	private static Cell end = new Cell(5,10,maze);
+	
 
 
     
-	public static Maze maze = new Maze(nRows,nCols);
+	
 	
 	
 	
 	  public static void main(String[] args) {
 		  
 			
-			maze.setStart(start);
-			maze.setEnd(end);
+			maze.setStartCell(start);
+			maze.setEndCell(end);
 			maze.setSolver(new OriginalSolver(maze));//changeable
 
 

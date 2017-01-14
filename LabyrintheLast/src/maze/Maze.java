@@ -15,7 +15,10 @@ public class Maze extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	public enum Dir {
-        N(1, 0, -1), S(2, 0, 1), E(4, 1, 0), W(8, -1, 0);
+        N(1, 0, -1), 
+        S(2, 0, 1),
+        E(4, 1, 0),
+        W(8, -1, 0);
     	//vecteur (0,-1) pour Nord 
     	//vecteur (0,1) pour Sud
     	//vecteur (1,0) pour Est
@@ -74,8 +77,8 @@ public class Maze extends JPanel {
     private final int margin;
     private final int[][] maze;
     private LinkedList<Integer> solution;
-    Cell start;
-    Cell end;
+    private Cell start;
+    private Cell end;
  
     public Maze(int nRows,int nCols) {
     	
@@ -103,11 +106,11 @@ public class Maze extends JPanel {
     {
     	this.solver = solver;
     }
-    public void setStart (Cell start)
+    public void setStartCell (Cell start)
     {
     	this.start = start;
     }
-    public void setEnd (Cell end)
+    public void setEndCell (Cell end)
     {
     	this.end = end;
     }
@@ -178,7 +181,7 @@ public class Maze extends JPanel {
  
         // draw pathfinding animation
         //rien est dessiné avant le clique parce que solution est vide
-        int offset = margin + cellSize / 2;
+        int offset = margin + cellSize /2;//distance entre le chemin et les parois ainsi qu'entre les points et les parois
  
         Path2D path = new Path2D.Float();
         path.moveTo(offset, offset);
@@ -192,12 +195,14 @@ public class Maze extends JPanel {
         g.setColor(Color.orange);
         g.draw(path);
  
+        //dessine le point de départ
         g.setColor(Color.blue);
-        g.fillOval(offset - 5, offset - 5, 10, 10);
+        g.fillOval(offset - 5+cellSize*getStartCell().getCol(), offset - 5 + cellSize*getStartCell().getRow(), 10, 10);
  
+        //dessine le point d'arrivée
         g.setColor(Color.green);
-        int x = offset + (nCols - 1) * cellSize;
-        int y = offset + (nRows - 1) * cellSize;
+        int x = offset + (getEndCell().getCol() ) * cellSize;
+        int y = offset + (getEndCell().getRow() ) * cellSize;
         g.fillOval(x - 5, y - 5, 10, 10);
  
     }
@@ -226,6 +231,16 @@ public class Maze extends JPanel {
 
 	public void setSolution(LinkedList<Integer> solution) {
 		this.solution = solution;
+	}
+
+
+
+	public Cell getEndCell() {
+		return end;
+	}
+
+	public Cell getStartCell() {
+		return start;
 	}
  
   

@@ -14,17 +14,17 @@ public class Cell {
 	public static Cell CELL_BOTTOM;
 	// The cell is visited or not
 	private boolean isVisited = false;
-	int col;
-	int row;
+	private int col;
+	private int row;
 	Maze maze;
 	
 	public Cell( int row, int col,Maze maze){
-		this.col = col;
-		this.row = row;
-		this.CELL_LEFT =  new Cell(row,col-1,maze);
+		this.setCol(col);
+		this.setRow(row);
+		/*this.CELL_LEFT =  new Cell(row,col-1,maze);
 		this.CELL_TOP =  new Cell(row+1,col,maze);
 		this.CELL_RIGHT =  new Cell(row,col+1,maze);
-		this.CELL_BOTTOM =  new Cell(row-1,col,maze);
+		this.CELL_BOTTOM =  new Cell(row-1,col,maze);*/
 
 	}
 	
@@ -41,8 +41,18 @@ public class Cell {
 	
 	 //controle que le point passé en parametre est dans les limites du labyrinthe
     boolean withinBounds(Cell cell){
-        return cell.col >= 0 && cell.col < maze.getNCols() && cell.row >= 0 && cell.row < maze.getNRows();
+        return cell.getCol() >= 0 && cell.getCol() < maze.getNCols() && cell.getRow() >= 0 && cell.getRow() < maze.getNRows();
     }
+    
+    public boolean isTheStart(Maze maze) {
+    	
+    		return ((this.getCol() == maze.getStartCell().getCol()) && (this.getRow() == maze.getStartCell().getRow()));
+    }
+    
+    public boolean isTheExit(Maze maze) {
+    	
+		return ((this.getCol() == maze.getEnd().getCol()) && (this.getRow() == maze.getEnd().getRow()));
+}
     
     public Cell isExploitable(Cell cell)//renvoi la cellule correspondante à la direction exploitable si possible, null sinon
     {
@@ -110,6 +120,22 @@ public class Cell {
 	
 	public boolean getVisited(){
 		return this.isVisited;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getCol() {
+		return col;
+	}
+
+	public void setCol(int col) {
+		this.col = col;
 	}
 
 	

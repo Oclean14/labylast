@@ -12,4 +12,6 @@ public class AbstractSolver {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 }

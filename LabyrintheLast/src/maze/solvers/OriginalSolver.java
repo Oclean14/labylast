@@ -15,22 +15,47 @@ public class OriginalSolver extends AbstractSolver{
 	@Override
 	public
     boolean solve(int pos) {
-		 if (pos == maze.getNCols() *  maze.getNRows() - 1)
+		 if (pos == maze.getEndCell().getCol() +  maze.getNCols() * ( maze.getEndCell()).getRow())//vérifie que l'arrivée et le départ ne sont pas confondu. Il faudra pouvoir mettre le départ
 	            return true;
+		 
+		 System.out.println("x de la fin = "+maze.getEndCell().getCol());
+		 System.out.println("y de la fin = "+maze.getEndCell().getRow());
+		 System.out.println("y * x = "+maze.getEndCell().getRow()*maze.getEndCell().getCol());
+		 System.out.println("pos = "+pos);
+
 	 
-	        int c = pos %  maze.getNCols();
-	        int r = pos /  maze.getNCols();
-	 
+	        int currentCol= pos %  maze.getNCols();//récupère le numéro de colonne
+	        int currentRaw= pos /  maze.getNCols();//récupère le numéro de ligne
+	    	//System.out.println("Je suis dans solve je vais dire les values des Dir successivement : ");
 	        for (Dir dir : Dir.values()) {
-	            int nc = c + dir.getDx();
-	            int nr = r + dir.getDy();
-	            if (withinBounds(nr, nc,maze) && ( maze.getMaze()[r][c] & dir.getBit()) != 0
-	                    && ( maze.getMaze()[nr][nc] & 16) == 0) {
+	        
+	        	
+	            int nextCol =currentCol+ dir.getDx();
+	            int nextRow = currentRaw+ dir.getDy();
+	            System.out.println("nextCol =currentCol+ dir.getDx()");
+	            System.out.println(nextCol +"="+currentCol+" + "+ dir.getDx());
+	            System.out.println("nextRow = currentRaw+ dir.getDy();");
+	            System.out.println(nextRow +"="+ currentRaw+" + "+ dir.getDy());
+	            System.out.println("c = "+currentCol+" et currentRaw= "+currentRaw);
+	            System.out.println();
+	            System.out.println();
+	            System.out.println();
+	            System.out.println();
+
+
+	            try {
+					Thread.sleep(1L);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	            if (withinBounds(nextRow, nextCol,maze) && ( maze.getMaze()[currentRaw][currentCol] & dir.getBit()) != 0
+	                    && ( maze.getMaze()[nextRow][nextCol] & 16) == 0) {
 	 
-	                int newPos = nr *  maze.getNCols() + nc;
+	                int newPos = nextRow *  maze.getNCols() + nextCol;
 	 
 	                maze.getSolution().add(newPos);
-	                maze.getMaze()[nr][nc] |= 16;
+	                maze.getMaze()[nextRow][nextCol] |= 16;
 	 
 	                maze.animate();
 	 
@@ -40,7 +65,9 @@ public class OriginalSolver extends AbstractSolver{
 	                maze.animate();
 	 
 	                maze.getSolution().removeLast();
-	                maze.getMaze()[nr][nc] &= ~16;
+	                maze.getMaze()[nextRow][nextCol] &= ~16;
+		            System.out.println("maze.getMaze()[nextRow][nextCol] &= ~16 renvoi "+ (maze.getMaze()[nextRow][nextCol] &= ~16) );
+
 	            }
 	        }
 	 
@@ -49,7 +76,7 @@ public class OriginalSolver extends AbstractSolver{
     
     //controle que le point passé en parametre est dans les limites du labyrinthe
     boolean withinBounds(int r, int c,Maze maze) {
-        return c >= 0 && c < maze.getNCols() && r >= 0 && r < maze.getNRows();
+        return c>= 0 && c< maze.getNCols() && r>= 0 && r< maze.getNRows();
     }
     public void setMaze(Maze maze)
     {
