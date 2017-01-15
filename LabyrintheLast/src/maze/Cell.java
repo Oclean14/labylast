@@ -1,13 +1,8 @@
 package maze;
 
-import java.awt.Color;
-import java.nio.charset.MalformedInputException;
-
-
 public class Cell {
 	
 	private boolean[] edges = new boolean[4];
-	private boolean[] exploitability = new boolean[4];
 	public static Cell CELL_LEFT;
 	public static Cell CELL_TOP;
 	public static Cell CELL_RIGHT;
@@ -18,15 +13,17 @@ public class Cell {
 	private int row;
 	Maze maze;
 	
-	public Cell( int row, int col,Maze maze){
+	public Cell(int col, int row ,Maze maze){
 		this.setCol(col);
 		this.setRow(row);
+		this.maze = maze;
 		/*this.CELL_LEFT =  new Cell(row,col-1,maze);
 		this.CELL_TOP =  new Cell(row+1,col,maze);
 		this.CELL_RIGHT =  new Cell(row,col+1,maze);
 		this.CELL_BOTTOM =  new Cell(row-1,col,maze);*/
 
 	}
+	public Cell() {}
 	
 	/*public Cell(Cell cell){
 		this.edges[CELL_LEFT] = getLeftEdge();
@@ -76,7 +73,7 @@ public class Cell {
 		return CELL_BOTTOM;
 	}
 	
-	public boolean isAvailable(){
+	/*public boolean isAvailable(){
 		return this.exploitability[CELL_LEFT];
 	}
 	
@@ -107,7 +104,7 @@ public class Cell {
 	public boolean getBottomExploitability(){
 		return this.exploitability[CELL_BOTTOM];
 	}
-	
+	*/
 	public void openWall(final int side){
 		
 		System.out.println("Open " + side + " edge" );

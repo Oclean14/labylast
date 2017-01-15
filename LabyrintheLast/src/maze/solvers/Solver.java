@@ -2,7 +2,7 @@ package maze.solvers;
 
 import maze.Cell;
 
-public class AbstractSolver {
+public class Solver {
 
 	//Maze maze;
 	//protected AbstractSolver(Maze maze) {this.maze = maze;}
