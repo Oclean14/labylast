@@ -31,7 +31,12 @@ public class OriginalSolver extends Solver{
 	        for (Dir dir : Dir.values()) {
 	            int nc = c + dir.getDx();
 	            int nr = r + dir.getDy();
-	            for (int posa : maze.getSolution()) {
+	       	 System.out.println("direction choisi : "+dir.name()+" donc la prochaine est : nc = "+nc+" et nr = "+nr);
+		   	 try {
+		            Thread.sleep(10000L);
+		        } catch (InterruptedException ignored) {
+		        }
+	           /* for (int posa : maze.getSolution()) {
 	                int x = posa % maze.getNCols();
 	                int y = posa / maze.getNCols();
 	                System.out.println("dans solve, d'après pos, X = "+x+" Y = "+y+" et posa = "+posa);
@@ -39,7 +44,7 @@ public class OriginalSolver extends Solver{
 	                System.out.println();
 	                System.out.println();
 
-	            }
+	            }*/
 	            if (withinBounds(nr, nc,maze) && ( maze.getMaze()[r][c] & dir.getBit()) != 0
 	                    && ( maze.getMaze()[nr][nc] & 16) == 0) {
 	 
@@ -49,7 +54,10 @@ public class OriginalSolver extends Solver{
 	                maze.getMaze()[nr][nc] |= 16;
 	 
 	                maze.animate();
-	 
+	                try {
+			            Thread.sleep(10000L);
+			        } catch (InterruptedException ignored) {
+			        }
 	                if (solve(newPos))
 	                    return true;
 	 

@@ -1,26 +1,29 @@
 package maze;
 
 public class Cell {
-	
-	private boolean[] edges = new boolean[4];
-	public static Cell CELL_LEFT;
-	public static Cell CELL_TOP;
-	public static Cell CELL_RIGHT;
-	public static Cell CELL_BOTTOM;
+
+	public Cell CELL_LEFT;
+	public Cell CELL_TOP;
+	public Cell CELL_RIGHT;
+	public Cell CELL_BOTTOM;
 	// The cell is visited or not
 	private boolean isVisited = false;
 	private int col;
 	private int row;
+	private int indicator;//position codé 
 	Maze maze;
-	
 	public Cell(int col, int row ,Maze maze){
 		this.setCol(col);
 		this.setRow(row);
 		this.maze = maze;
-		/*this.CELL_LEFT =  new Cell(row,col-1,maze);
-		this.CELL_TOP =  new Cell(row+1,col,maze);
-		this.CELL_RIGHT =  new Cell(row,col+1,maze);
-		this.CELL_BOTTOM =  new Cell(row-1,col,maze);*/
+		
+
+	}
+	public Cell(int col, int row){
+		this.setCol(col);
+		this.setRow(row);
+		
+		
 
 	}
 	public Cell() {}
@@ -36,6 +39,26 @@ public class Cell {
 		this.exploitability[CELL_BOTTOM] = getBottomExploitability();
 	}*/
 	
+	public void setEdges() {
+		this.CELL_LEFT =  new Cell(col-1,row);
+		this.CELL_TOP =  new Cell(col,row-1);
+		this.CELL_RIGHT =  new Cell(col+1,row);
+		this.CELL_BOTTOM =  new Cell(col,row+1);
+	}
+	public void setIndicator(int indic)
+	{	
+		this.indicator = indic;
+		
+	}
+	public int getIndicator()
+	{
+		return indicator;
+	}
+	public int[] getCellCoord()
+	{
+		 int[] tab = {col,row};
+		return tab;
+	}
 	 //controle que le point passé en parametre est dans les limites du labyrinthe
     boolean withinBounds(Cell cell){
         return cell.getCol() >= 0 && cell.getCol() < maze.getNCols() && cell.getRow() >= 0 && cell.getRow() < maze.getNRows();
@@ -72,44 +95,7 @@ public class Cell {
 	public Cell getBottomEdge(){
 		return CELL_BOTTOM;
 	}
-	
-	/*public boolean isAvailable(){
-		return this.exploitability[CELL_LEFT];
-	}
-	
-	public void setLeftExploitability(boolean  exploitability){
-		this.exploitability[CELL_LEFT] = exploitability;
-	}
-	
-	public void setRightExploitability(boolean  exploitability){
-		this.exploitability[CELL_RIGHT] = exploitability;
-	}
-	
-	public void setTopExploitability(boolean  exploitability){
-		this.exploitability[CELL_TOP] = exploitability;
-	}
-	
-	public void setBottomExploitability(boolean  exploitability){
-		this.exploitability[CELL_BOTTOM] = exploitability;
-	}
-	
-	public boolean getRightExploitability(){
-		return this.exploitability[CELL_RIGHT];
-	}
-	
-	public boolean getTopExploitability(){
-		return this.exploitability[CELL_TOP];
-	}
-	
-	public boolean getBottomExploitability(){
-		return this.exploitability[CELL_BOTTOM];
-	}
-	*/
-	public void openWall(final int side){
-		
-		System.out.println("Open " + side + " edge" );
-		this.edges[side] = false;
-	}
+
 	
 	public void setVisited(final boolean isVisited){
 		this.isVisited = isVisited;
@@ -134,6 +120,7 @@ public class Cell {
 	public void setCol(int col) {
 		this.col = col;
 	}
+	
 
 	
 }

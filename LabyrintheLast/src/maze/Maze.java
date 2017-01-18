@@ -12,7 +12,9 @@ import java.util.LinkedList;
 
 import javax.swing.JPanel;
 
+import maze.generators.Generator;
 import maze.generators.OriginalGenerator;
+import maze.generators.RandomFusionGenerator;
 import maze.solvers.OriginalSolver;
 import maze.solvers.Solver;
  
@@ -84,22 +86,25 @@ public class Maze extends JPanel {
 		}
     };
     private Solver solver;
+    private Generator generator;
     
     private final int nCols;
     private final int nRows;
     private final int cellSize = 25;
     private final int margin=27;
+    
     private int[][] maze;
     private final int offset = margin + cellSize / 2;
     private LinkedList<Integer> solution=new LinkedList<>();
     Cell start;
     Cell end;
  
-    public Maze(int nRows,int nCols, int[] startCoord, int[] endCoord) {
+    public Maze(int nRows,int nCols, int[] startCoord, int[] endCoord, Generator generator) {
     	
     	this.nCols = nCols;
         this.nRows = nRows;
        // generator.setMaze(this);
+        this.generator=generator;
        
         
         setPreferredSize(new Dimension(nCols*cellSize+2*margin, nRows*cellSize+2*margin));
@@ -111,8 +116,8 @@ public class Maze extends JPanel {
         maze = new int[nRows][nCols];
         setSolution(new LinkedList<>());
        //solution.add(mouse.getRow() * nCols +mouse.getCol());
-        OriginalGenerator generator = new OriginalGenerator(0,0,nCols,nRows);
-        
+        //RandomFusionGenerator generator = new RandomFusionGenerator(0,0,nCols,nRows);
+        //OriginalGenerator generator = new OriginalGenerator(0,0,nCols,nRows);
         maze = generator.generateMaze(0, 0);//(0,0) coordonné départ de la création 
 		   System.out.println("maze après génération ");
 
@@ -235,23 +240,23 @@ public class Maze extends JPanel {
                 //test chaque cellule pour savoir quelle barriere dessiner autour avec le codage des directions (voir compréhension code section new)
                 //le dessin du contour semble implicite
                 if ((getMaze()[r][c] & 1) == 0) { // N
-                	System.out.println("Je suis en ("+c+","+r+") Je dessine la ligne du haut ");
+                	//System.out.println("Je suis en ("+c+","+r+") Je dessine la ligne du haut ");
                 	g.drawLine(x, y, x + cellSize, y);
                 }
  
                 if ((getMaze()[r][c] & 2) == 0) { // S
-                	System.out.println("Je suis en ("+c+","+r+") et Je dessine la ligne du bas");
+                	//System.out.println("Je suis en ("+c+","+r+") et Je dessine la ligne du bas");
                     g.drawLine(x, y + cellSize, x + cellSize, y + cellSize);
  
             }
                
                 if ((getMaze()[r][c] & 4) == 0) {// E
-                	System.out.println("Je suis en ("+c+","+r+") et Je dessine la ligne de droite ");
+                //	System.out.println("Je suis en ("+c+","+r+") et Je dessine la ligne de droite ");
                     g.drawLine(x + cellSize, y, x + cellSize, y + cellSize);
  
             }
                 if ((getMaze()[r][c] & 8) == 0) { // W
-                	System.out.println("Je suis en ("+c+","+r+") Je dessine la ligne de gauche ");
+                //	System.out.println("Je suis en ("+c+","+r+") Je dessine la ligne de gauche ");
                     g.drawLine(x, y, x, y + cellSize);
             }
             }
